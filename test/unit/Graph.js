@@ -9,7 +9,7 @@ var chai   = require('chai'),
 
 chai.use(sinonChai);
 
-describe('Graph unit test:\n - A Graph holds a set of rules and is responsible to execute the action asociated to the matched rule', function(){
+describe('Graph unit tests:\n - A Graph holds a set of rules and is responsible to execute the action asociated to the matched rule', function(){
 
     describe('Adding rules to the current Graph', function(){
         var sut = new Graph(),
