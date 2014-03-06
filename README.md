@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/elmasse/yalex.png?branch=master)](https://travis-ci.org/elmasse/yalex)
 #yalex (yet another lexer)
 
 ##Install
