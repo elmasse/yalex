@@ -18,7 +18,7 @@ describe('Graph unit tests:\n - A Graph holds a set of rules and is responsible 
 
         it('should have an empty set of rules when creating a new Graph', function(){
             expect(sut).to.have.property('rules').that.is.an('array');
-            expect(sut).to.have.property('rules').that.is.empty;            
+            expect(sut).to.have.property('rules').that.is.empty;
         });
 
         it('should create a new Rule with the given regex and action and add it to the current set', function(){
@@ -53,7 +53,7 @@ describe('Graph unit tests:\n - A Graph holds a set of rules and is responsible 
             it('should call action on the matching rule with the graph scope', function(){
                 sut.run('input');
 
-                expect(spyAction).to.be.called;
+                expect(spyAction).to.be.calledWith('input');
                 expect(spyAction).to.be.calledOn(sut);
             });
 
@@ -69,7 +69,7 @@ describe('Graph unit tests:\n - A Graph holds a set of rules and is responsible 
 
                 sut.addRule(/rule1/, spyAction1);
                 sut.addRule(/rule2/, spyAction2);
-                
+
                 matchRule1Stub = sinon.stub(sut.rules[0], 'matches');
                 matchRule1Stub.returns(['input']);
 
@@ -79,7 +79,7 @@ describe('Graph unit tests:\n - A Graph holds a set of rules and is responsible 
                 sut.run('input');
 
                 expect(spyAction2).to.be.called;
-                expect(spyAction2).to.be.calledOn(sut);                
+                expect(spyAction2).to.be.calledOn(sut);
                 expect(spyAction1).to.not.be.called;
             });
 
@@ -88,7 +88,7 @@ describe('Graph unit tests:\n - A Graph holds a set of rules and is responsible 
 
                 sut.addRule(/rule1/, spyAction1);
                 sut.addRule(/rule2/, spyAction2);
-                
+
                 matchRule1Stub = sinon.stub(sut.rules[0], 'matches');
                 matchRule1Stub.returns(['same']);
 
