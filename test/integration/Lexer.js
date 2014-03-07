@@ -16,9 +16,12 @@ describe('Lexer integration tests', function(){
 
         init = lexer.initializer();
 
+        //define expressions
+        init ('{digit}')    (/[0-9]/);
+        init ('{number}')   (/{digit}+(\.{digit}+)?(E[+-]?{digit}+)?/);
         //define state rules
         init (/[A-Za-z_]+/) (function(/*match*/){ tokens.push(Token.IDENTIFIER); });
-        init (/[0-9]+/)     (function(/*match*/){ this.installToken(Token.NUMERIC); });
+        init (/{number}/)   (function(/*match*/){ this.installToken(Token.NUMERIC); });
         init (/[ \s\n\t]+/) (/*No action*/);
         init (/$/)          (function(/*match*/){ tokens.push(Token.EOF); return false;});
 
@@ -28,7 +31,7 @@ describe('Lexer integration tests', function(){
 
         describe('using lex method', function(){
             it('lex(source) should parse ID NUMERIC ID EOF', function(){
-                var source = 'identifier 999 another_ID';
+                var source = 'identifier 0.3E+99 another_ID';
 
                 tokens = [];
 
