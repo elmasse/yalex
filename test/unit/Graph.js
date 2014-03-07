@@ -11,10 +11,12 @@ chai.use(sinonChai);
 
 describe('Graph unit tests:\n - A Graph holds a set of rules and is responsible to execute the action asociated to the matched rule', function(){
 
-    describe('Adding rules to the current Graph', function(){
+    describe('Adding rules', function(){
         var sut = new Graph(),
             regex = /[A-Z]+/,
-            action = function(){};
+            action = function(){},
+            noOpStub = sinon.stub(sut, 'noOp');
+
 
         it('should have an empty set of rules when creating a new Graph', function(){
             expect(sut).to.have.property('rules').that.is.an('array');
@@ -29,10 +31,13 @@ describe('Graph unit tests:\n - A Graph holds a set of rules and is responsible 
         });
 
         it('should create a new Rule with the given regex and noOp when no action is passed', function(){
+            var noOp = function(){};
+
+            noOpStub.returns(noOp);
             sut.addRule(regex);
 
             expect(sut.rules).to.have.deep.property('[1]').that.is.an.instanceOf(Rule);
-            expect(sut.rules).to.have.deep.property('[1]').that.have.property('action').that.is.eql(sut.noOp);
+            expect(sut.rules).to.have.deep.property('[1]').that.have.property('action').that.is.eql(noOp);
         });
 
     });
@@ -54,7 +59,7 @@ describe('Graph unit tests:\n - A Graph holds a set of rules and is responsible 
                 sut.run('input');
 
                 expect(spyAction).to.be.calledWith('input');
-                expect(spyAction).to.be.calledOn(sut);
+                expect(spyAction).to.be.calledOn(sut.auxActions);
             });
 
         });
@@ -79,7 +84,7 @@ describe('Graph unit tests:\n - A Graph holds a set of rules and is responsible 
                 sut.run('input');
 
                 expect(spyAction2).to.be.called;
-                expect(spyAction2).to.be.calledOn(sut);
+                expect(spyAction2).to.be.calledOn(sut.auxActions);
                 expect(spyAction1).to.not.be.called;
             });
 
@@ -98,7 +103,7 @@ describe('Graph unit tests:\n - A Graph holds a set of rules and is responsible 
                 sut.run('input');
 
                 expect(spyAction2).to.be.called;
-                expect(spyAction2).to.be.calledOn(sut);
+                expect(spyAction2).to.be.calledOn(sut.auxActions);
                 expect(spyAction1).to.not.be.called;
 
             });
@@ -122,8 +127,18 @@ describe('Graph unit tests:\n - A Graph holds a set of rules and is responsible 
             });
 
         });
+    });
 
+    describe('Adding auxiliar actions', function(){
+        var sut = new Graph(),
+            name = 'aux',
+            action = function(){};
 
+        sut.addAuxiliarAction(name, action);
+
+        it('should add method as member of auxActions', function(){
+            expect(sut.auxActions).to.respondTo(name);
+        });
     });
 
 });

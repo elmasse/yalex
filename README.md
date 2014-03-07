@@ -20,10 +20,10 @@ lexer = new Lexer();
 init = lexer.initializer();
 
 //rules:
-init (/[A-Za-z_]+/) (function(/*match*/){ tokens.push("IDENTIFIER"); return this.next();});
-init (/[0-9]+/)     (function(/*match*/){ tokens.push("NUMERIC"); return this.next();});
+init (/[A-Za-z_]+/) (function(/*match*/){ tokens.push("IDENTIFIER"); });
+init (/[0-9]+/)     (function(/*match*/){ tokens.push("NUMERIC"); });
 init (/[ \s\n\t]+/) (/*No action*/);
-init (/$/)          (function(/*match*/){ tokens.push("EOF"); return null;});
+init (/$/)          (function(/*match*/){ tokens.push("EOF"); return false;});
 
 //tokenize
 lexer.lex('ID ANOTHER_ID 9999');
