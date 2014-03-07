@@ -19,11 +19,14 @@ lexer = new Lexer();
 
 init = lexer.initializer();
 
+//expressions
+init ('{digit}')      (/[0-9]/);
 //rules:
-init (/[A-Za-z_]+/) (function(/*match*/){ tokens.push("IDENTIFIER"); });
-init (/[0-9]+/)     (function(/*match*/){ tokens.push("NUMERIC"); });
-init (/[ \s\n\t]+/) (/*No action*/);
-init (/$/)          (function(/*match*/){ tokens.push("EOF"); return false;});
+init (/[A-Za-z_]+/)   (function(/*match*/){ tokens.push("IDENTIFIER"); });
+// - using expressions
+init (/{digit}+/)     (function(/*match*/){ tokens.push("NUMERIC"); });
+init (/[ \s\n\t]+/)   (/*No action*/);
+init (/$/)            (function(/*match*/){ tokens.push("EOF"); return false;});
 
 //tokenize
 lexer.lex('ID ANOTHER_ID 9999');
