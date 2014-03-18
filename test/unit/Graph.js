@@ -127,6 +127,7 @@ describe('Graph unit tests:\n - A Graph holds a set of rules and is responsible 
             });
 
         });
+
     });
 
     describe('Adding auxiliar actions', function(){
