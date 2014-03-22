@@ -64,6 +64,7 @@ describe('Rule unit tests:\n - A Rule holds a regex and the action to be execute
             sut.matches(onlyText);
 
             expect(matchSpy).to.be.calledWith(sut.regex);
+            String.prototype.match.restore();
         });
 
         it('should return an array that contains the matched value',function(){
@@ -77,6 +78,28 @@ describe('Rule unit tests:\n - A Rule holds a regex and the action to be execute
             var match = sut.matches(onlyNumbers);
 
             expect(match).to.be.a('null');
+        });
+
+
+
+    });
+
+    describe('Rule skip', function() {
+        var sut = new Rule({regex:/[A-Za-z]+/}),
+            onlyText = 'OnlyTextShouldMatch';
+
+        it('should return null once if skip was executed on the rule',function(){
+            var matchSpy = sinon.spy(String.prototype, 'match');
+            
+            sut.skip();
+
+            sut.matches(onlyText);
+            expect(matchSpy).to.not.be.called;
+
+            sut.matches(onlyText);
+            expect(matchSpy).to.be.calledWith(sut.regex);
+            
+            String.prototype.match.restore();
         });
 
     });

@@ -12,7 +12,7 @@ chai.use(sinonChai);
 describe('Lexer unit tests:', function(){
 
     describe('initializing a new Lexer', function(){
-        var sut = new Lexer(),
+        var sut = Lexer.create(),
             action = sinon.spy(),
             regex = /regex/,
             auxActionName = 'auxiliar', 
@@ -57,7 +57,7 @@ describe('Lexer unit tests:', function(){
     });
 
     describe('lex() method runs against source until an action returns null', function(){
-        var sut = new Lexer(),
+        var sut = Lexer.create(),
             runSpy = sinon.stub(sut.graph, 'run'),
             setSourceSpy = sinon.spy(sut.graph, 'setSource'),
             actionNext = sinon.spy(sut.graph, 'next'),
@@ -101,7 +101,7 @@ describe('Lexer unit tests:', function(){
     });
 
     describe('next() method runs against source for the first rule matched', function(){
-        var sut = new Lexer(),
+        var sut = Lexer.create(),
             runSpy = sinon.stub(sut.graph, 'run'),
             setSourceSpy = sinon.spy(sut.graph, 'setSource'),
             actionNext = sinon.spy(sut.graph, 'next'),

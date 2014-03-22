@@ -15,7 +15,7 @@ npm install git://github.com/elmasse/yalex.git --save
 var Lexer = require('yalex'),
     lexer, init, tokens = [];
 
-lexer = new Lexer();
+lexer = Lexer().create();
 
 init = lexer.initializer();
 

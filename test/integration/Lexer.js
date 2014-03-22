@@ -12,7 +12,7 @@ describe('Lexer integration tests', function(){
             tokens = [],
             init;
 
-        lexer = new Lexer();
+        lexer = Lexer.create();
 
         init = lexer.initializer();
 
