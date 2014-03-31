@@ -65,12 +65,12 @@ describe('Graph unit tests:\n - A Graph holds a set of rules and is responsible 
         });
 
         describe('Multi rule matching', function(){
-            var spyAction1 = sinon.spy(),
-                spyAction2 = sinon.spy(),
-                matchRule1Stub, matchRule2Stub;
+            var matchRule1Stub, matchRule2Stub;
 
             it('should call action on the longest matching rule', function(){
-                var sut = new Graph();
+                var spyAction1 = sinon.spy(),
+                    spyAction2 = sinon.spy(),
+                    sut = new Graph();
 
                 sut.addRule(/rule1/, spyAction1);
                 sut.addRule(/rule2/, spyAction2);
@@ -88,9 +88,11 @@ describe('Graph unit tests:\n - A Graph holds a set of rules and is responsible 
                 expect(spyAction1).to.not.be.called;
             });
 
-            it('should call the latest defined rule if matching terms have same length', function(){
-                var sut = new Graph();
-
+            it('should call the earliest defined rule if matching terms have same length', function(){
+                var spyAction1 = sinon.spy(),
+                    spyAction2 = sinon.spy(),
+                    sut = new Graph();
+                    
                 sut.addRule(/rule1/, spyAction1);
                 sut.addRule(/rule2/, spyAction2);
 
@@ -102,9 +104,9 @@ describe('Graph unit tests:\n - A Graph holds a set of rules and is responsible 
 
                 sut.run('input');
 
-                expect(spyAction2).to.be.called;
-                expect(spyAction2).to.be.calledOn(sut.auxActions);
-                expect(spyAction1).to.not.be.called;
+                expect(spyAction1).to.be.called;
+                expect(spyAction1).to.be.calledOn(sut.auxActions);
+                expect(spyAction2).to.not.be.called;
 
             });
 
