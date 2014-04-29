@@ -46,7 +46,7 @@ describe('Rule unit tests:\n - A Rule holds a regex and the action to be execute
         sut = new Rule();
 
         it('should wrap the regex to test matches that start with the given regex', function(){
-            var wrapRegex = new RegExp('^('+regex.source+')');
+            var wrapRegex = new RegExp('^(?:'+regex.source+')');
             sut.setRegex(regex);
             expect(sut.regex).to.be.eql(wrapRegex);
         });
