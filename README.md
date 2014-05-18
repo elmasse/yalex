@@ -9,7 +9,84 @@ npm install git://github.com/elmasse/yalex.git --save
 
 ##Usage
 
-###Define Lex rules
+###Define grammar in json format
+
+````js
+var Lexer = require('yalex'),
+    lexer, grammar, tokens = [];
+
+grammar = {
+    "expressions": {
+        '{digit}' : '[0-9]',
+        '{number}':  '{digit}+(\\.{digit}+)?(E[+-]?{digit}+)?'
+    },
+    "rules": {
+        '[A-Za-z_]+'    : 'Token.IDENTIFIER|install',
+        '{number}'      : 'Token.NUMERIC|install',
+        '[ \\s\\n\\t]+' : '', /*NO ACTION*/
+        '$'             : 'Token.EOF|install|END'
+    }
+};
+
+lexer = Lexer.create({
+    grammar: grammar,
+    helpers: {
+        Token: Token,
+        install: function(token){
+            tokens.push(token);
+        }
+    }
+});
+
+//tokenize
+lexer.lex('ID ANOTHER_ID 9999');
+
+console.log(tokens);
+
+````
+
+###Use Grammar defined in external json file
+
+Grammar.json
+
+````json
+{
+    "expressions": {
+        "{digit}" : "[0-9]",
+        "{number}":  "{digit}+(\\.{digit}+)?(E[+-]?{digit}+)?"
+    },
+    "rules": {
+        "[A-Za-z_]+"    : "Token.IDENTIFIER|install",
+        "{number}"      : "Token.NUMERIC|install",
+        "[ \\s\\n\\t]+" : "",
+        "$"             : "Token.EOF|install|END"
+    }
+}
+````
+
+````js
+var Lexer = require('yalex'),
+    lexer, tokens = [];
+
+
+lexer = Lexer.create({
+    json : __dirname + './Grammar.json',
+    helpers: {
+        Token: Token,
+        install: function(token){
+            tokens.push(token);
+        }
+    }
+});
+
+//tokenize
+lexer.lex('ID ANOTHER_ID 9999');
+
+console.log(tokens);
+
+````
+
+###Define Lex rules programmaticaly
 
 ````js
 var Lexer = require('yalex'),

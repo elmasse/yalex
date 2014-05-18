@@ -144,4 +144,25 @@ describe('Graph unit tests:\n - A Graph holds a set of rules and is responsible 
         });
     });
 
+    describe('Loading Grammar from json definition', function(){
+        var sut = new Graph();
+
+
+        it('should have an empty set of rules when creating a new Graph', function(){
+            expect(sut).to.have.property('rules').that.is.an('array');
+            expect(sut).to.have.property('rules').that.is.empty;
+        });
+
+        it('should create a new Rule with the given regex and action and add it to the current set', function(){
+            sut.loadGrammar({
+                'rules': {
+                    '[A-Z]+': ' '
+                }
+            });
+
+            expect(sut.rules).to.have.deep.property('[0]').that.is.an.instanceOf(Rule);
+        });
+
+    });
+
 });

@@ -1,0 +1,12 @@
+{
+    "expressions": {
+        "{digit}" : "[0-9]",
+        "{number}":  "{digit}+(\\.{digit}+)?(E[+-]?{digit}+)?"
+    },
+    "rules": {
+        "[A-Za-z_]+"    : "Token.IDENTIFIER|install",
+        "{number}"      : "Token.NUMERIC|install",
+        "[ \\s\\n\\t]+" : "",
+        "$"             : "Token.EOF|install|END"
+    }
+}
