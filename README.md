@@ -31,7 +31,11 @@ grammar = {
 lexer = Lexer.create({
     grammar: grammar,
     helpers: {
-        Token: Token,
+        Token: {
+            IDENTIFIER: "IDENTIFIER",
+            NUMERIC: "NUMERIC",
+            EOF: "EOF"
+        },
         install: function(token){
             tokens.push(token);
         }
@@ -72,7 +76,11 @@ var Lexer = require('yalex'),
 lexer = Lexer.create({
     json : __dirname + './Grammar.json',
     helpers: {
-        Token: Token,
+        Token: {
+            IDENTIFIER: "IDENTIFIER",
+            NUMERIC: "NUMERIC",
+            EOF: "EOF"
+        },
         install: function(token){
             tokens.push(token);
         }
@@ -111,7 +119,7 @@ lexer.lex('ID ANOTHER_ID 9999');
 console.log(tokens);
 ````
 
-This will print:
+All this examples will print:
 
 ````bash
 ["IDENTIFIER", "IDENTIFIER", "NUMERIC", "EOF"]
