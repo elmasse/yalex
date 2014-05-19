@@ -119,7 +119,7 @@ lexer.lex('ID ANOTHER_ID 9999');
 console.log(tokens);
 ````
 
-All this examples will print:
+All these examples will print:
 
 ````bash
 ["IDENTIFIER", "IDENTIFIER", "NUMERIC", "EOF"]
