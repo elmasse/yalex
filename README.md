@@ -3,6 +3,14 @@
 
 ##Install
 
+> npm
+
+````bash
+npm install yalex --save
+````
+
+> From Git Repository
+
 ````bash
 npm install git://github.com/elmasse/yalex.git --save
 ````

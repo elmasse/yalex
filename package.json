@@ -1,13 +1,23 @@
 {
   "name": "yalex",
-  "version": "0.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Yet Another Lexer.",
   "main": "lib/Lexer.js",
   "scripts": {
     "test": "grunt test"
   },
-  "repository": "",
-  "author": "",
+  "keywords": [
+    "lexer",
+    "grammar"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elmasse/yalex.git"
+  },
+  "bugs": {
+    "url": "https://github.com/elmasse/yalex/issues"
+  },
+  "author": "Maximiliano Fierro",
   "dependencies": {
     "cocktail": "~0.5",
     "cocktail-trait-configurable": "0.0.2"
