@@ -1,9 +1,10 @@
 'use strict';
 
-var chai   = require('chai'),
-    expect = chai.expect,
-    Lexer  = require('../../lib/Lexer'),
-    Token  = require('../helper/Token');
+var chai   = require('chai');
+var Lexer  = require('../../lib/Lexer');
+var Token  = require('../helper/Token');
+
+var expect = chai.expect;
 
 describe('Lexer integration tests', function(){
 

@@ -13,26 +13,27 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/elmasse/yalex.git"
-  },
+  }, 
   "bugs": {
     "url": "https://github.com/elmasse/yalex/issues"
   },
   "author": "Maximiliano Fierro",
+  "scripts": {
+    "test": "npm run lint && npm run unit && npm run integration",
+    "unit": "mocha --recursive test/unit/",
+    "integration": "mocha --recursive test/integration/",
+    "lint": "eslint --quiet lib/"
+  },
   "dependencies": {
-    "cocktail": "~0.5",
-    "cocktail-trait-configurable": "0.0.2"
+    "cocktail": "~0.7.1",
+    "cocktail-trait-configurable": "1.1.0"
   },
   "devDependencies": {
-    "grunt-simple-mocha": "~0.4",
-    "chai": "1.9.1",
-    "mocha": "1.18.2",
-    "grunt-mocha-test": "~0.10",
-    "grunt-contrib-jshint": "~0.10",
-    "grunt-contrib-watch": "~0.6",
-    "grunt": "~0.4",
-    "sinon-chai": "~2.5",
-    "sinon": "~1.9",
-    "grunt-cli": "0.1.13"
+    "chai": "~2.3",
+    "eslint": "^0.21.2",
+    "mocha": "~2.2.5",
+    "sinon": "~1.14.1",
+    "sinon-chai": "~2.7"
   },
   "license": "MIT"
 }
