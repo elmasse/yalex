@@ -3,12 +3,13 @@
 var chai   = require('chai');
 var Lexer  = require('../../lib/Lexer');
 var path   = require('path');
+var fs     = require('fs');
 
 var expect = chai.expect;
 
-describe('Lexer integration tests', function(){
+describe('Lexer integration tests', function () {
 
-    describe('Lexer with simple grammar', function() {
+    describe('Lexer with simple grammar', function () {
         var Token  = require('../helper/simple/Token');
 
         describe('Lexer describing grammar programmatically', function () {
@@ -192,6 +193,69 @@ describe('Lexer integration tests', function(){
 
             });       
         });
+    });
+
+    describe('Lexer with ES5 grammar', function () {
+        var Token = require('../helper/es5/Token');
+        var grammar = require('../helper/es5/grammar.js');
+
+        var lexer,
+            tokens = [],
+            expected, source, check;
+
+        lexer = Lexer.create({
+            grammar: grammar,
+            helpers: {
+                Token: Token,
+                add : function (token) {
+                    tokens.push(token);
+                },
+                shouldSkipNextRegex: function (value) {
+                    if (value === ')' || value === ']') {
+                        this.skipRegexRule();
+                    }
+                },
+                skipRegexRule: function () {
+                    lexer.getRuleAt(6).skip();
+                }
+            }
+        });
+
+        function runLexerWith (file) {
+            var start, diff;
+
+            tokens = [];
+            source = fs.readFileSync(path.resolve(__dirname, '../helper/es5/files/' + file + '.js'), 'utf8');
+            check  = require('../helper/es5/files/' + file + '.tokens.json');
+
+            start = (new Date()).getTime();
+            lexer.lex(source);
+            diff = (new Date()).getTime() - start;
+
+            expect(tokens.length).to.be.equals(check.length);
+            // console.log('total: ' + diff + 'ms. tokens: ' + tokens.length + ' rate: ' + (tokens.length/diff) + '/ms');
+
+            // tokens.forEach(function (token, i) {
+            //     expected = check[i];
+            //     // if(expected  && expected.type.toUpperCase() !== token.type) {
+            //     //     console.log('At ' + i + '\n');
+            //     //     console.log('expected:' + expected.type +  '  got:' + token.type);
+            //     //     console.log('expected:' + expected.value +  '  got:' + token.value);
+            //     //     throw new Error();
+            //     // }
+            //     if(expected){
+            //         expect(token.type).to.be.eql(expected.type);
+            //     }
+            // });
+        } 
+
+        it('lex large source', function () {
+            runLexerWith('large');
+        });
+
+        it('lex large minified source', function () {
+            runLexerWith('large.min')
+        });      
     });
 
 });
